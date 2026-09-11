@@ -4,7 +4,7 @@
 
 Ne publiez pas de secret, de donnée personnelle ni de détail exploitable d’une vulnérabilité dans une issue publique.
 
-Un canal privé de signalement n’est pas encore publié pour ce projet. En attendant sa publication, ne divulguez pas publiquement les détails exploitables d’un problème de sécurité. Décrivez uniquement le risque de manière non exploitable dans une issue si cela est nécessaire pour ouvrir la discussion.
+Pour signaler une vulnérabilité de sécurité, utilisez le mécanisme GitHub Private vulnerability reporting de ce dépôt. N’ouvrez pas d’issue publique contenant des détails exploitables.
 
 ## Périmètre de maintenance
 
