@@ -294,7 +294,7 @@ avertissements
 Associer aux montants leurs unités, devise, base et périmètre ; identifier les
 sorties indisponibles avec leur motif. Aucun JSON ni script n’est implémenté.
 
-## 18. Tests fonctionnels futurs
+## 18. Tests automatisés V1
 
 - Marge positive, nulle et négative.
 - Coût nul et prix nul.
@@ -307,12 +307,12 @@ sorties indisponibles avec leur motif. Aucun JSON ni script n’est implémenté
 - Variation de coût fournie et variation de volume non fournie.
 - Comparaison de plusieurs scénarios.
 
-Ces cas sont à tester ultérieurement. Aucun test exécutable ni moteur n’est
-ajouté à cette étape.
+L’engine V1 est présent dans `engine/`. La suite
+`tests/tarification/calculate.test.ts` contient 43 tests automatisés.
 
 ## 19. Statut V1
 
-Le contrat fonctionnel V1 est défini. Aucun moteur déterministe n’est encore
-implémenté et aucun composant tiers n’est embarqué. Open Accountant
+Le contrat fonctionnel V1 et son engine déterministe sont implémentés, validés
+et figés. Aucun composant tiers n’est embarqué. Open Accountant
 `pricing-optimizer` est seulement envisagé comme source d’adaptation future ;
 aucun contenu tiers n’est repris dans ce fichier.

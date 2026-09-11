@@ -263,7 +263,7 @@ Associer aux montants leur devise et leur base, aux entrées leur provenance,
 et aux sorties indisponibles leur motif ; ne pas les remplacer par zéro.
 Aucun format JSON ni mécanisme de sérialisation n’est implémenté à cette étape.
 
-## 13. Tests fonctionnels futurs
+## 13. Tests automatisés V1
 
 - Seuil standard : cohérence des voies unitaire et globale sur les mêmes données.
 - Coûts fixes nuls : distinction selon le signe de la contribution.
@@ -281,13 +281,13 @@ Aucun format JSON ni mécanisme de sérialisation n’est implémenté à cette 
 - Offre récurrente : distinction entre unités facturées et clients distincts.
 - Sensibilité : seules les variations fournies sont utilisées.
 
-Ces cas décrivent les vérifications à réaliser plus tard ; aucun test exécutable
-n’est ajouté et aucune validation d’un moteur n’est revendiquée.
+L’engine V1 est présent dans `engine/`. La suite
+`tests/seuil-rentabilite/calculate.test.ts` contient 18 tests automatisés.
 
 ## 14. Statut V1
 
-Le contrat fonctionnel V1 est défini. Aucun moteur déterministe n’est encore
-implémenté et aucun composant tiers n’est encore embarqué.
+Le contrat fonctionnel V1 et son engine déterministe sont implémentés, validés
+et figés. Aucun composant tiers n’est embarqué.
 
 Une adaptation future du skill Open Accountant `break-even-calc` est envisagée.
 Open Accountant n’est pas intégré ; aucun contenu tiers n’est repris dans ce fichier.

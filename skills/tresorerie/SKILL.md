@@ -199,7 +199,7 @@ Ne pas prévoir automatiquement ventes, croissance, saisonnalité ou probabilit�
 
 Pour la rentabilité : [seuil-rentabilite](../seuil-rentabilite/SKILL.md). Pour le prix : [tarification](../tarification/SKILL.md).
 
-## 25. Tests fonctionnels futurs
+## 25. Tests automatisés V1
 
 - Solde simple, périodes chaînées et scénario sans historique.
 - Flux engagé, attendu et hypothetique ; facture non encaissée et flux sans date.
@@ -209,8 +209,9 @@ Pour la rentabilité : [seuil-rentabilite](../seuil-rentabilite/SKILL.md). Pour 
 - Devise, montant, date et HT/TTC incohérents.
 - Absence de solde de départ et comparaison de scénarios.
 
-Ces cas seront testés ultérieurement ; aucun test exécutable ni moteur n’est ajouté.
+L’engine V1 est présent dans `engine/`. La suite
+`tests/tresorerie/calculate.test.ts` contient 15 tests automatisés.
 
 ## 26. Statut V1
 
-Le contrat fonctionnel V1 est défini. Aucun moteur déterministe ni prévision statistique n’est encore implémenté, et aucun composant tiers n’est embarqué. Open Accountant `cash-flow-forecast` est seulement envisagé comme source d’adaptation future ; aucun contenu tiers n’est repris dans ce fichier.
+Le contrat fonctionnel V1 et son engine déterministe sont implémentés, validés et figés. Aucune prévision statistique ni composant tiers n’est intégré. Open Accountant `cash-flow-forecast` est seulement envisagé comme source d’adaptation future ; aucun contenu tiers n’est repris dans ce fichier.

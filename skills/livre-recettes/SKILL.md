@@ -195,7 +195,7 @@ Prévenir double import, saisie puis réimport, facture et encaissement addition
 
 Ne pas faire de comptabilité officielle, garantir une conformité légale, créer des factures, inventer champs réglementaires ou données, supprimer des doublons, modifier silencieusement une entrée, inventer une date d’encaissement, traiter une facture comme encaissement, coder un taux réglementaire, ni prétendre que l’application externe est connectée.
 
-## 28. Tests fonctionnels futurs
+## 28. Tests automatisés V1
 
 - Recette complète, donnée manquante et zéro réel versus montant absent.
 - Montant ou date invalide, doublon de référence et doublon potentiel.
@@ -206,4 +206,7 @@ Ne pas faire de comptabilité officielle, garantir une conformité légale, cré
 
 ## 29. Statut V1
 
-Le contrat fonctionnel V1 est défini. Aucun registre déterministe, intégration externe ou règle française n’est implémenté. Aucun composant tiers n’est embarqué ; `livre-des-recettes` est uniquement un candidat d’intégration future.
+L’engine V1 est présent dans `engine/`. La suite
+`tests/livre-recettes/calculate.test.ts` contient 8 tests automatisés.
+
+Le contrat fonctionnel V1 et son engine déterministe sont implémentés, validés et figés. Aucune intégration externe n’est active. Les règles France restent dans le référentiel dédié et aucun composant tiers n’est embarqué ; `livre-des-recettes` est uniquement un candidat d’intégration future.

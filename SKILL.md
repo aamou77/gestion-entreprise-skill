@@ -171,31 +171,24 @@ Ne pas inventer données, taux, obligations, prix de marché, probabilités, pr�
 
 ## 18. État réel d’implémentation
 
-Les contrats fonctionnels V1 des cinq sous-skills sont disponibles. Le référentiel France V1 est disponible et sa revue transversale a été effectuée. Les moteurs déterministes ne sont pas implémentés. Les adapters ne sont pas implémentés, hors squelettes ou documentation éventuels. Aucun composant tiers, CRM ou tableau de bord technique n’est intégré.
+Les cinq moteurs déterministes V1 sont implémentés, validés et figés : `seuil-rentabilite`, `tarification`, `tresorerie`, `synthese-gestion` et `livre-recettes`. L’orchestration V1 est également implémentée ; elle qualifie les valeurs, route les intentions, contrôle les compatibilités, transmet des valeurs qualifiées, préserve la provenance, prévient le double comptage, autorise les sommes homogènes et détermine un statut global.
+
+Le référentiel France V1 est disponible et sa revue transversale a été effectuée. Les tests automatisés couvrent les moteurs et l’orchestration : 115 tests au total. Les adapters, composants tiers, CRM et tableau de bord technique ne sont pas intégrés.
 
 ## 19. Évolutions futures
 
-Sans les présenter comme existants : moteurs déterministes, adaptateur livre-des-recettes, CRM, rentabilité client, prévisions statistiques, reporting automatisé et tableaux de bord.
+Sans les présenter comme existants : adaptateur livre-des-recettes, CRM, rentabilité client, prévisions statistiques, reporting automatisé et tableaux de bord.
 
-Prochaine phase : concevoir les moteurs déterministes génériques, commencer par `seuil-rentabilite`, puis `tarification`, et ensuite seulement les moteurs dépendant directement du référentiel réglementaire France. `seuil-rentabilite` est le premier candidat recommandé : son calcul est déterministe, sans dépendance réglementaire directe obligatoire, et il permet de valider les conventions d’entrée et sortie, les erreurs et les tests.
-
-L’architecture future suit le principe :
-
-```text
-inputs qualifiés → routage → sélection de règles → calcul déterministe → contrôles → résultat + provenance
-```
-
-Les sorties devront distinguer `constat`, `calcul`, `projection`, `indisponible` et `needs_review`.
-
-## 20. Tests fonctionnels futurs du routeur
+## 20. Tests automatisés V1 du routeur
 
 - Demande simple, demande multi-domaines et analyse partielle.
 - Question réglementaire sans règle France `verified` applicable.
 - Donnée essentielle absente, conflit HT/TTC, devise ou période.
 - Double comptage potentiel et scénario sans historique.
 - Demande marketing, comptabilité officielle ou application externe indisponible.
-- Sous-skill présent avec moteur non implémenté.
+
+La suite `tests/orchestrator/orchestration.test.ts` contient 23 tests. La commande `npm test` exécute séquentiellement les 115 tests du dépôt.
 
 ## 21. Statut V1
 
-L’orchestrateur fonctionnel V1, les cinq sous-skills et le référentiel France V1 sont disponibles. La revue transversale du référentiel a conclu « COHERENT AVEC POINTS DE VIGILANCE », sans contradiction bloquante. Aucun moteur déterministe ni composant tiers n’est intégré et aucune intégration externe n’est active.
+L’orchestration V1 et les cinq moteurs V1 sont implémentés, validés et figés. Le référentiel France V1 est disponible ; sa revue transversale a conclu « COHERENT AVEC POINTS DE VIGILANCE », sans contradiction bloquante. Aucun composant tiers ni intégration externe n’est actif.

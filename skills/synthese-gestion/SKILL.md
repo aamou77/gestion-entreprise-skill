@@ -198,7 +198,7 @@ Prévenir le double comptage : une recette déjà dans le CA encaissé n’est p
 
 Ne pas faire de comptabilité officielle, bilan ou liasse fiscale ; certifier une rentabilité ; inventer données, seuils, prévisions ou stratégie ; modifier les sources ; présenter scénario comme réel ; ni produire une analyse marketing sans données.
 
-## 23. Tests fonctionnels futurs
+## 23. Tests automatisés V1
 
 - Synthèse réelle complète ou partielle, avec données manquantes.
 - Réel versus prévision et scénario.
@@ -210,4 +210,7 @@ Ne pas faire de comptabilité officielle, bilan ou liasse fiscale ; certifier un
 
 ## 24. Statut V1
 
-Le contrat fonctionnel V1 est défini. Aucun agrégateur déterministe, tableau de bord technique ou intégration CRM n’est implémenté. Aucun composant tiers n’est embarqué. Open Accountant est seulement envisagé comme source d’adaptation future ; aucun contenu tiers n’est repris.
+L’engine V1 est présent dans `engine/`. La suite
+`tests/synthese-gestion/calculate.test.ts` contient 8 tests automatisés.
+
+Le contrat fonctionnel V1 et son engine déterministe sont implémentés, validés et figés. Aucun tableau de bord technique, intégration CRM ou composant tiers n’est intégré. Open Accountant est seulement envisagé comme source d’adaptation future ; aucun contenu tiers n’est repris.
