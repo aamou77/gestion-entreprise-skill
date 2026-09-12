@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "strict": true,
+    "noEmitOnError": true,
+    "rewriteRelativeImportExtensions": true
+  },
+  "include": [
+    "index.ts",
+    "orchestrator/**/*.ts",
+    "skills/seuil-rentabilite/engine/**/*.ts",
+    "skills/tarification/engine/**/*.ts",
+    "skills/tresorerie/engine/**/*.ts",
+    "skills/synthese-gestion/engine/**/*.ts",
+    "skills/livre-recettes/engine/**/*.ts"
+  ],
+  "exclude": [
+    "tests",
+    "dist",
+    "node_modules"
+  ]
+}

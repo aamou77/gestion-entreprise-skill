@@ -3,13 +3,13 @@ import type { ErrorCode, RevenueLedgerInput, ValidationError } from "./types.ts"
 const descriptive = ["reference_piece", "client_ou_payeur", "nature", "mode_reglement"] as const;
 const correctable = ["date_encaissement", "date_facture", "reference_piece", "client_ou_payeur", "nature", "montant", "mode_reglement"];
 const has = (value: object, key: string) => Object.prototype.hasOwnProperty.call(value, key);
-const add = (errors: ValidationError[], code: ErrorCode, field: string) => errors.push({ code, fields: [field], message: `${field}: ${code}` });
+const add = (errors: ValidationError[], code: ErrorCode, field: string): void => { errors.push({ code, fields: [field], message: `${field}: ${code}` }); };
 export const isDate = (value: unknown): value is string => {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const [y, m, d] = value.split("-").map(Number); const x = new Date(Date.UTC(y, m - 1, d));
   return x.getUTCFullYear() === y && x.getUTCMonth() === m - 1 && x.getUTCDate() === d;
 };
-const nonEmpty = (value: unknown) => typeof value === "string" && value.trim().length > 0;
+const nonEmpty = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
 function source(value: unknown, field: string, errors: ValidationError[]): void {
   if (value === undefined) return;
   if (!value || typeof value !== "object" || Array.isArray(value)) return add(errors, "INVALID_REFERENCE", field);
@@ -38,7 +38,7 @@ function event(value: unknown, index: number, entries: Map<string, Record<string
   if (!nonEmpty(item.target_entry_id)) add(errors, "MISSING_REQUIRED_INPUT", `${path}.target_entry_id`); else if (!entries.has(item.target_entry_id)) add(errors, "INVALID_TARGET_ENTRY", `${path}.target_entry_id`);
   for (const key of ["date_evenement", "date_enregistrement"]) if (!has(item, key)) add(errors, "MISSING_REQUIRED_INPUT", `${path}.${key}`); else if (!isDate(item[key])) add(errors, "INVALID_DATE", `${path}.${key}`);
   const target = entries.get(item.target_entry_id as string);
-  if (target && isDate(item.date_evenement) && (item.date_evenement < target.date_encaissement || item.date_evenement > period.fin)) add(errors, "INVALID_DATE", `${path}.date_evenement`);
+  if (target && isDate(item.date_evenement) && (item.date_evenement < (target.date_encaissement as string) || item.date_evenement > period.fin)) add(errors, "INVALID_DATE", `${path}.date_evenement`);
   if (!has(item, "motif")) add(errors, "MISSING_REQUIRED_INPUT", `${path}.motif`); else if (!nonEmpty(item.motif)) add(errors, "INVALID_REFERENCE", `${path}.motif`);
   source(item.source, `${path}.source`, errors);
   if (item.type === "remboursement") { if (!has(item, "montant")) add(errors, "MISSING_REQUIRED_INPUT", `${path}.montant`); else if (typeof item.montant !== "number" || !Number.isFinite(item.montant)) add(errors, "INVALID_NUMBER", `${path}.montant`); else if (item.montant < 0) add(errors, "INVALID_AMOUNT", `${path}.montant`); }

@@ -1,6 +1,6 @@
 {
   "name": "gestion-entreprise-skill",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -8,17 +8,39 @@
   "engines": {
     "node": ">=24"
   },
-  "types": "./index.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./index.ts",
-    "./orchestrator": "./orchestrator/index.ts",
-    "./skills/seuil-rentabilite": "./skills/seuil-rentabilite/engine/index.ts",
-    "./skills/tarification": "./skills/tarification/engine/index.ts",
-    "./skills/tresorerie": "./skills/tresorerie/engine/index.ts",
-    "./skills/synthese-gestion": "./skills/synthese-gestion/engine/index.ts",
-    "./skills/livre-recettes": "./skills/livre-recettes/engine/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./orchestrator": {
+      "types": "./dist/orchestrator/index.d.ts",
+      "import": "./dist/orchestrator/index.js"
+    },
+    "./skills/seuil-rentabilite": {
+      "types": "./dist/skills/seuil-rentabilite/engine/index.d.ts",
+      "import": "./dist/skills/seuil-rentabilite/engine/index.js"
+    },
+    "./skills/tarification": {
+      "types": "./dist/skills/tarification/engine/index.d.ts",
+      "import": "./dist/skills/tarification/engine/index.js"
+    },
+    "./skills/tresorerie": {
+      "types": "./dist/skills/tresorerie/engine/index.d.ts",
+      "import": "./dist/skills/tresorerie/engine/index.js"
+    },
+    "./skills/synthese-gestion": {
+      "types": "./dist/skills/synthese-gestion/engine/index.d.ts",
+      "import": "./dist/skills/synthese-gestion/engine/index.js"
+    },
+    "./skills/livre-recettes": {
+      "types": "./dist/skills/livre-recettes/engine/index.d.ts",
+      "import": "./dist/skills/livre-recettes/engine/index.js"
+    }
   },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "test:seuil-rentabilite": "node tests/seuil-rentabilite/calculate.test.ts",
     "test:tarification": "node tests/tarification/calculate.test.ts",
     "test:tresorerie": "node tests/tresorerie/calculate.test.ts",
@@ -27,5 +49,8 @@
     "test:orchestrator": "node tests/orchestrator/orchestration.test.ts",
     "test:public-exports": "node tests/public-exports.test.ts",
     "test": "node tests/seuil-rentabilite/calculate.test.ts && node tests/tarification/calculate.test.ts && node tests/tresorerie/calculate.test.ts && node tests/synthese-gestion/calculate.test.ts && node tests/livre-recettes/calculate.test.ts && node tests/orchestrator/orchestration.test.ts && node tests/public-exports.test.ts"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
   }
 }

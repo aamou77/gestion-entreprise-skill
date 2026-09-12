@@ -1,0 +1,157 @@
+import type { BreakEvenResult } from "../skills/seuil-rentabilite/engine/index.ts";
+import type { PricingResult } from "../skills/tarification/engine/index.ts";
+import type { TreasuryResult } from "../skills/tresorerie/engine/index.ts";
+import type { ManagementSummaryResult } from "../skills/synthese-gestion/engine/index.ts";
+import type { RevenueLedgerResult } from "../skills/livre-recettes/engine/index.ts";
+export type EngineDomain = "seuil-rentabilite" | "tarification" | "tresorerie" | "synthese-gestion" | "livre-recettes";
+export type Period = {
+    debut: string;
+    fin: string;
+};
+export type ValueMeaning = "encaissement" | "recettes_registre_brutes" | "recettes_registre_nettes" | "recettes_retenues_gestion" | "couts_retenus_gestion" | "ca" | "flux_tresorerie" | "solde_tresorerie" | "prix_unitaire" | "marge" | "seuil_rentabilite_ca" | "marge_securite" | "base_sociale" | "base_tva" | "indicateur_reporte";
+export type QualifiedOrigin = "provided" | "engine" | "derived";
+export type OrchestrationSource = {
+    domain: EngineDomain;
+    result_key?: string;
+    source_id?: string;
+} | {
+    domain: "provided";
+    source_id?: string;
+};
+export type ContributionReference = {
+    domain: EngineDomain | "provided";
+    source_id: string;
+};
+type Q = {
+    origin: QualifiedOrigin;
+    meaning: ValueMeaning;
+    source?: OrchestrationSource;
+    periode?: Period;
+    devise?: string;
+    perimetre?: string;
+    base_montants?: "HT" | "TTC";
+    unite?: string;
+    contribution_refs?: ContributionReference[];
+};
+export type AvailableQualifiedValue<T> = Q & {
+    status: "available";
+    value: T;
+    state: "reel" | "previsionnel" | "hypothetique";
+};
+export type UnavailableQualifiedValue = Q & {
+    status: "unavailable";
+    reason: string;
+};
+export type QualifiedValue<T> = AvailableQualifiedValue<T> | UnavailableQualifiedValue;
+export type RequestedOutputKind = "engine_result" | "qualified_value" | "reported_indicator" | "sum";
+export type RequestedOutput = {
+    id: string;
+    kind: RequestedOutputKind;
+    required: boolean;
+};
+export type CompositionKind = "single_engine" | "qualified_transmission" | "reported_indicator" | "pricing_to_break_even" | "sum";
+export type RouteIntent = "break_even" | "pricing" | "treasury" | "management_summary" | "revenue_ledger" | "pricing_then_break_even" | "ledger_then_summary";
+export type RouteDecision = {
+    requested_output_id: string;
+    engines: EngineDomain[];
+    composition: CompositionKind;
+};
+export type EngineStatus = "ok" | "partial" | "unavailable";
+export type EngineResultEnvelope = {
+    engine: "seuil-rentabilite";
+    status: EngineStatus;
+    result: BreakEvenResult;
+} | {
+    engine: "tarification";
+    status: EngineStatus;
+    result: PricingResult;
+} | {
+    engine: "tresorerie";
+    status: EngineStatus;
+    result: TreasuryResult;
+} | {
+    engine: "synthese-gestion";
+    status: EngineStatus;
+    result: ManagementSummaryResult;
+} | {
+    engine: "livre-recettes";
+    status: EngineStatus;
+    result: RevenueLedgerResult;
+};
+export type OrchestrationErrorCode = "MISSING_REQUIRED_DATA" | "INVALID_QUALIFICATION" | "INCOMPATIBLE_PERIOD" | "INCOMPATIBLE_CURRENCY" | "INCOMPATIBLE_AMOUNT_BASIS" | "INCOMPATIBLE_SCOPE" | "INCOMPATIBLE_UNIT" | "DUPLICATE_ECONOMIC_CONTRIBUTION" | "INSUFFICIENT_PROVENANCE" | "ENGINE_UNAVAILABLE" | "UNSUPPORTED_COMPOSITION";
+export type OrchestrationError = {
+    code: OrchestrationErrorCode;
+    output_id?: string;
+    fields?: string[];
+    message: string;
+};
+export type ArithmeticComposition = {
+    operation: "sum";
+    values: AvailableQualifiedValue<number>[];
+};
+export type ComposedResult = {
+    kind: "engine_relay";
+    output_id: string;
+    value: QualifiedValue<unknown>;
+} | {
+    kind: "qualified_transmission";
+    output_id: string;
+    value: QualifiedValue<unknown>;
+    qualification_applied: string[];
+} | {
+    kind: "reported_indicator";
+    output_id: string;
+    value: QualifiedValue<unknown>;
+} | {
+    kind: "arithmetic_composition";
+    output_id: string;
+    operation: "sum";
+    value: QualifiedValue<number>;
+    input_refs: ContributionReference[];
+};
+export type AvailableReferenceResult = {
+    status: "available";
+    rule_id: string;
+    rule_status: "verified";
+    source_ids?: string[];
+};
+export type UnavailableReferenceResult = {
+    status: "unavailable";
+    rule_id?: string;
+    rule_status?: "verified" | "scheduled" | "needs_review" | "superseded" | "unknown";
+    source_ids?: string[];
+    reason: string;
+};
+export type ReferenceResult = AvailableReferenceResult | UnavailableReferenceResult;
+export type UnavailableItem = {
+    output_id: string;
+    reason: string;
+    code?: OrchestrationErrorCode;
+};
+export type Warning = {
+    output_id?: string;
+    code: string;
+    message: string;
+};
+export type Recommendation = {
+    output_id?: string;
+    text: string;
+};
+export type ComposedProvenance = {
+    output_id: string;
+    contribution_refs?: ContributionReference[];
+    qualification_applied?: string[];
+};
+export type OrchestrationResult = {
+    status: EngineStatus;
+    route: RouteDecision[];
+    engine_results: EngineResultEnvelope[];
+    composed_results: ComposedResult[];
+    reference_results: ReferenceResult[];
+    unavailable: UnavailableItem[];
+    warnings: Warning[];
+    errors: OrchestrationError[];
+    provenance: ComposedProvenance[];
+    recommendations?: Recommendation[];
+};
+export {};
