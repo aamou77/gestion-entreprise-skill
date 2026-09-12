@@ -1,12 +1,22 @@
 {
   "name": "gestion-entreprise-skill",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "license": "MIT",
   "type": "module",
   "description": "Deterministic business-management skills and French regulatory reference material, with explicit provenance and limits.",
   "engines": {
     "node": ">=24"
+  },
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./orchestrator": "./orchestrator/index.ts",
+    "./skills/seuil-rentabilite": "./skills/seuil-rentabilite/engine/index.ts",
+    "./skills/tarification": "./skills/tarification/engine/index.ts",
+    "./skills/tresorerie": "./skills/tresorerie/engine/index.ts",
+    "./skills/synthese-gestion": "./skills/synthese-gestion/engine/index.ts",
+    "./skills/livre-recettes": "./skills/livre-recettes/engine/index.ts"
   },
   "scripts": {
     "test:seuil-rentabilite": "node tests/seuil-rentabilite/calculate.test.ts",
@@ -15,6 +25,7 @@
     "test:synthese-gestion": "node tests/synthese-gestion/calculate.test.ts",
     "test:livre-recettes": "node tests/livre-recettes/calculate.test.ts",
     "test:orchestrator": "node tests/orchestrator/orchestration.test.ts",
-    "test": "node tests/seuil-rentabilite/calculate.test.ts && node tests/tarification/calculate.test.ts && node tests/tresorerie/calculate.test.ts && node tests/synthese-gestion/calculate.test.ts && node tests/livre-recettes/calculate.test.ts && node tests/orchestrator/orchestration.test.ts"
+    "test:public-exports": "node tests/public-exports.test.ts",
+    "test": "node tests/seuil-rentabilite/calculate.test.ts && node tests/tarification/calculate.test.ts && node tests/tresorerie/calculate.test.ts && node tests/synthese-gestion/calculate.test.ts && node tests/livre-recettes/calculate.test.ts && node tests/orchestrator/orchestration.test.ts && node tests/public-exports.test.ts"
   }
 }

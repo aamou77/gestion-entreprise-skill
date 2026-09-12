@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.1]
+
+Package/public API release.
+
+### Added
+
+- root public package entry point;
+- stable package exports for orchestrator and five engines;
+- public export validation test.
+
+### Changed
+
+- npm test now includes public package export validation.
+
+### Unchanged
+
+- business logic and engine behavior remain unchanged.
+
 ## [0.1.0] - 2026-09-12
 
 ### Added
